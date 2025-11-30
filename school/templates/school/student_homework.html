@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-12">
+        <h2>📝 Домашние задания</h2>
+        
+        <div class="card">
+            <div class="card-header">
+                <ul class="nav nav-tabs card-header-tabs">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'student_grades' %}">📈 Оценки</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="{% url 'student_homework' %}">📝 Домашние задания</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'student_schedule' %}">📅 Расписание</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="card-body">
+                {% if homework %}
+                <div class="row">
+                    {% for hw in homework %}
+                    <div class="col-md-6 mb-3">
+                        <div class="card {% if hw.due_date < today %}border-warning{% else %}border-primary{% endif %}">
+                            <div class="card-header">
+                                <h5 class="card-title mb-0">{{ hw.subject.name }}</h5>
+                            </div>
+                            <div class="card-body">
+                                <p class="card-text">{{ hw.assignment }}</p>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <small class="text-muted">
+                                        📅 Сдать до: {{ hw.due_date }}
+                                    </small>
+                                    {% if hw.due_date < today %}
+                                        <span class="badge bg-warning">Просрочено</span>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+                {% else %}
+                <div class="text-center py-4">
+                    <p class="text-muted">🎉 Домашних заданий нет!</p>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

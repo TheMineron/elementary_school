@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-12">
+        <h2>📚 Мои классы и предметы</h2>
+        
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header bg-primary text-white">
+                        <h5 class="card-title mb-0">🏫 Классное руководство</h5>
+                    </div>
+                    <div class="card-body">
+                        {% if classes_taught %}
+                            {% for class in classes_taught %}
+                            <div class="card mb-3">
+                                <div class="card-body">
+                                    <h5 class="card-title">{{ class }}</h5>
+                                    <p class="card-text">Классный руководитель</p>
+                                    <div class="btn-group w-100">
+                                        <a href="{% url 'teacher_class_grades' class.id %}" class="btn btn-primary">
+                                            📊 Оценки класса
+                                        </a>
+                                        <a href="{% url 'add_homework' class.id %}" class="btn btn-success">
+                                            📝 Добавить ДЗ
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        {% else %}
+                            <p class="text-muted">Вы не являетесь классным руководителем</p>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-6">
+                <div class="card mt-4">
+                    <div class="card-body text-center">
+                        <h5>Действия</h5>
+                        <div class="d-grid gap-2">
+                            <a href="{% url 'add_grade' %}" class="btn btn-primary btn-lg">
+                                ➕ Выставить оценку
+                            </a>
+                            <a href="{% url 'teacher_schedule' %}" class="btn btn-secondary">
+                                📅 Мое расписание
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

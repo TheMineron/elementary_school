@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card text-center">
+            <div class="card-body">
+                <h1 class="card-title">🏫 Добро пожаловать в начальную школу!</h1>
+                <p class="card-text">
+                    {% if user.is_authenticated %}
+                        Добро пожаловать, {{ user.get_full_name|default:user.username }}!
+                        Вы вошли как <strong>{{ user.get_user_type_display }}</strong>.
+                    {% else %}
+                        Пожалуйста, войдите в систему для доступа к функциям школы.
+                    {% endif %}
+                </p>
+                
+                {% if user.is_authenticated %}
+                    <div class="mt-4">
+                        {% if user.user_type == 'student' %}
+                            <a href="{% url 'student_grades' %}" class="btn btn-primary btn-lg">📊 Посмотреть мои оценки</a>
+                        {% elif user.user_type == 'parent' %}
+                            <a href="{% url 'parent_children' %}" class="btn btn-primary btn-lg">👨‍👩‍👧‍👦 Мои дети</a>
+                        {% elif user.user_type == 'teacher' %}
+                            <a href="{% url 'teacher_classes' %}" class="btn btn-primary btn-lg">📚 Мои классы</a>
+                        {% endif %}
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

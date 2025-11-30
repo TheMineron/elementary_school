@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-12">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <h2>📝 Домашние задания {{ child.user.get_full_name }}</h2>
+            <a href="{% url 'parent_children' %}" class="btn btn-secondary">← Назад к детям</a>
+        </div>
+        
+        <div class="card">
+            <div class="card-body">
+                {% if homework %}
+                <div class="row">
+                    {% for hw in homework %}
+                    <div class="col-md-6 mb-3">
+                        <div class="card {% if hw.due_date < today %}border-warning{% else %}border-primary{% endif %}">
+                            <div class="card-header">
+                                <h5 class="card-title mb-0">{{ hw.subject.name }}</h5>
+                            </div>
+                            <div class="card-body">
+                                <p class="card-text">{{ hw.assignment }}</p>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <small class="text-muted">
+                                        📅 Сдать до: {{ hw.due_date }}
+                                    </small>
+                                    {% if hw.due_date < today %}
+                                        <span class="badge bg-warning">Просрочено</span>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+                {% else %}
+                <div class="text-center py-4">
+                    <p class="text-muted">🎉 Домашних заданий нет!</p>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

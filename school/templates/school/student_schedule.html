@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-12">
+        <h2>📅 Мое расписание</h2>
+        
+        <div class="card">
+            <div class="card-header">
+                <ul class="nav nav-tabs card-header-tabs">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'student_grades' %}">📈 Оценки</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'student_homework' %}">📝 Домашние задания</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="{% url 'student_schedule' %}">📅 Расписание</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="card-body">
+                {% if schedule %}
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <thead class="table-dark">
+                            <tr>
+                                <th>День недели</th>
+                                <th>Время</th>
+                                <th>Предмет</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for lesson in schedule %}
+                            <tr>
+                                <td><strong>{{ lesson.get_day_of_week_display }}</strong></td>
+                                <td>{{ lesson.time|time:"H:i" }}</td>
+                                <td>{{ lesson.subject.name }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                {% else %}
+                <div class="text-center py-4">
+                    <p class="text-muted">📭 Расписание не найдено</p>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

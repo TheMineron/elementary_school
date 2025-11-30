@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-12">
+        <h2>👨‍👩‍👧‍👦 Мои дети</h2>
+        
+        <div class="card">
+            <div class="card-body">
+                {% if children %}
+                <div class="row">
+                    {% for child in children %}
+                    <div class="col-md-6 mb-4">
+                        <div class="card">
+                            <div class="card-body text-center">
+                                <h5 class="card-title">{{ child.user.get_full_name }}</h5>
+                                <p class="card-text">
+                                    {% with class=child.school_class.first %}
+                                        {% if class %}
+                                            Класс: {{ class.number }}{{ class.letter }}
+                                        {% else %}
+                                            Класс не назначен
+                                        {% endif %}
+                                    {% endwith %}
+                                </p>
+                                <div class="btn-group">
+                                    <a href="{% url 'parent_child_grades' child.id %}" class="btn btn-primary">
+                                        📊 Оценки
+                                    </a>
+                                    <a href="{% url 'parent_child_homework' child.id %}" class="btn btn-success">
+                                        📝 Домашние задания
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+                {% else %}
+                <div class="text-center py-4">
+                    <p class="text-muted">👶 Дети не найдены</p>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

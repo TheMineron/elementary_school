@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-12">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <h2>📊 Оценки {{ child.user.get_full_name }}</h2>
+            <a href="{% url 'parent_children' %}" class="btn btn-secondary">← Назад к детям</a>
+        </div>
+        
+        <div class="card">
+            <div class="card-body">
+                {% if grades %}
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <thead class="table-dark">
+                            <tr>
+                                <th>Предмет</th>
+                                <th>Оценка</th>
+                                <th>Дата</th>
+                                <th>Комментарий</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for grade in grades %}
+                            <tr>
+                                <td>{{ grade.subject.name }}</td>
+                                <td>
+                                    <span class="badge {% if grade.value >= 4 %}bg-success{% else %}bg-warning{% endif %} fs-6">
+                                        {{ grade.value }}
+                                    </span>
+                                </td>
+                                <td>{{ grade.date }}</td>
+                                <td>{{ grade.comment|default:"-" }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                {% else %}
+                <div class="text-center py-4">
+                    <p class="text-muted">📭 Оценок пока нет</p>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
