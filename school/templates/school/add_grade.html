@@ -82,7 +82,6 @@
     </div>
 </div>
 
-<!-- JavaScript для динамического обновления списка студентов -->
 <script>
 document.addEventListener('DOMContentLoaded', function() {
     const inputs = document.querySelectorAll('input, select, textarea');
@@ -92,7 +91,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
     const classSelect = document.getElementById('id_school_class');
     const studentSelect = document.getElementById('id_student');
-    const form = document.getElementById('grade-form');
 
     function updateStudents() {
         const classId = classSelect.value;

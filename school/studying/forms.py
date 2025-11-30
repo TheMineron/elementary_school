@@ -34,13 +34,6 @@ class GradeForm(forms.ModelForm):
 				).order_by('user__last_name', 'user__first_name')
 			except (ValueError, TypeError):
 				pass
-		elif self.instance.pk:
-			if self.instance.student and self.instance.student.school_class.exists():
-				school_class = self.instance.student.school_class.first()
-				self.fields['school_class'].initial = school_class
-				self.fields['student'].queryset = Student.objects.filter(
-					school_class=school_class
-				).order_by('user__last_name', 'user__first_name')
 
 
 class HomeworkForm(forms.ModelForm):
